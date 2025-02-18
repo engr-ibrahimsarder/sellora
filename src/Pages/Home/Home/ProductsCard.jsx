@@ -1,10 +1,18 @@
 import { Card } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductsCard = ({ product }) => {
-  const { name, price, img, ratings } = product;
+  const navigate = useNavigate();
+  const { name, price, img, ratings, _id } = product;
+  const navigateToProductDetail = (id) => {
+    navigate(`/category/${id}`);
+  };
   return (
     <div>
-      <button className="cursor-pointer">
+      <button
+        onClick={() => navigateToProductDetail(_id)}
+        className="cursor-pointer"
+      >
         <Card className="max-w-sm h-[500px]" imgAlt={name} imgSrc={img}>
           <a href="#">
             <h5 className="text-base font-semibold tracking-tight text-gray-900 dark:text-white">

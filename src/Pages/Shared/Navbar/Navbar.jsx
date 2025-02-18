@@ -3,7 +3,10 @@ import { FaBars, FaShoppingCart, FaTimes } from "react-icons/fa";
 import logo from "../../../assets/logo.png";
 import CustomLink from "../../../CustomLink/CustomLink";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import { Link } from "react-router-dom";
+import useCart from "../../../hooks/useCart";
 const Navbar = () => {
+  const [cart] = useCart();
   const { user, logOut } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const handleLogOut = () => {
@@ -24,7 +27,7 @@ const Navbar = () => {
         <CustomLink className="mr-4" to="/dashboard/cart">
           <FaShoppingCart className="text-2xl mt-5"></FaShoppingCart>
           <div className="px-2 py-1 rounded-full bg-gray-300 text-orange-400 absolute top-52 lg:top-1  ml-3">
-            +0
+            +{cart.length}
           </div>
         </CustomLink>
       </li>
@@ -48,9 +51,9 @@ const Navbar = () => {
       <nav className="bg-orange-600 shadow-md fixed w-full z-10">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           {/* Logo */}
-          <a href="#" className="text-xl font-bold text-blue-600">
+          <Link to="/">
             <img className="h-14" src={logo} alt="" />
-          </a>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6">{navMenu}</div>

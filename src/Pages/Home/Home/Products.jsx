@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
 import ProductsCard from "./ProductsCard";
+import useProducts from "../../../hooks/useProducts";
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    fetch("products.json")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
+  const [products] = useProducts();
+
   return (
     <div className="container mx-auto">
       <h1 className="mt-6 text-xl my-2">Just For You</h1>
