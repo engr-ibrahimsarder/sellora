@@ -6,6 +6,9 @@ import SignUp from "../Pages/SignUp/SignUp";
 import ProductDetail from "../Pages/Home/Home/ProductDetail";
 import Categories from "../Pages/Home/Categories/Categories/Categories";
 import OurShop from "../Pages/Home/OurShop/OurShop";
+import Cart from "../Pages/Home/Cart/Cart";
+import PrivateRoute from "./PrivateRoute";
+import CheckOut from "../Pages/Home/CheckOut/CheckOut";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,22 @@ const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <Categories></Categories>,
+      },
+      {
+        path: "cart",
+        element: (
+          <PrivateRoute>
+            <Cart></Cart>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "checkout",
+        element: (
+          <PrivateRoute>
+            <CheckOut></CheckOut>
+          </PrivateRoute>
+        ),
       },
     ],
   },

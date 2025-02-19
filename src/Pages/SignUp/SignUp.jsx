@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
+import usePublic from "../../hooks/usePublic";
+import SocialLogin from "../../Components/SocialLogin";
 const SignUp = () => {
+  const axiosPublic = usePublic();
   const { createUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const {
@@ -14,16 +17,25 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    const userInfo = {
-      name: data.name,
-      email: data.email,
-    };
-    console.log(userInfo);
-    createUser(data.email, data.password).then((res) => {
-      console.log(res);
-      navigate("/");
+    createUser(data.email, data.password).then(() => {
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
+        if (res.data.insertedId) {
+          reset();
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "User Created Successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        }
+      });
     });
-    reset();
   };
   return (
     <div>
@@ -93,9 +105,7 @@ const SignUp = () => {
             </p>
             <p className="text-center mt-5 text-xl">or signin with</p>
             <div className="flex gap-5 mt-5 justify-center">
-              <button className="cursor-pointer flex justify-center items-center gap-3">
-                <FcGoogle /> <p>Google</p>
-              </button>
+              <SocialLogin></SocialLogin>
             </div>
           </div>
         </div>

@@ -1,16 +1,20 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { FcGoogle } from "react-icons/fc";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
+import SocialLogin from "../../Components/SocialLogin";
 const Login = () => {
   const { signIn } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -20,10 +24,19 @@ const Login = () => {
     };
     console.log(userInfo);
     signIn(data.email, data.password).then((res) => {
-      console.log(res);
-      navigate("/");
+      const user = res.user;
+      if (user) {
+        reset();
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "User Loging Successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(from, { replace: true });
+      }
     });
-    reset();
   };
   return (
     <div>
@@ -75,9 +88,7 @@ const Login = () => {
             </p>
             <p className="text-center mt-5 text-xl">or signin with</p>
             <div className="flex gap-5 mt-5 justify-center">
-              <button className="cursor-pointer flex justify-center items-center gap-3">
-                <FcGoogle /> <p>Google</p>
-              </button>
+              <SocialLogin></SocialLogin>
             </div>
           </div>
         </div>

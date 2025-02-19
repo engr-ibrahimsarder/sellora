@@ -51,7 +51,7 @@ const Navbar = () => {
         <CustomLink to="/dashboard">Dashboard</CustomLink>
       </li>
       <li>
-        <CustomLink className="mr-4" to="/dashboard/cart">
+        <CustomLink className="mr-4" to="/cart">
           <FaShoppingCart className="text-2xl mt-5"></FaShoppingCart>
           <div className="px-2 py-1 rounded-full bg-gray-300 text-orange-400 absolute top-52 lg:top-1  ml-3">
             +{cart.length}
