@@ -3,23 +3,50 @@ import { FaBars, FaShoppingCart, FaTimes } from "react-icons/fa";
 import logo from "../../../assets/logo.png";
 import CustomLink from "../../../CustomLink/CustomLink";
 import { AuthContext } from "../../../Providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useCart from "../../../hooks/useCart";
+import { AiOutlineSearch } from "react-icons/ai";
 const Navbar = () => {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
   const [cart] = useCart();
   const { user, logOut } = useContext(AuthContext);
+  console.log(user);
   const [isOpen, setIsOpen] = useState(false);
   const handleLogOut = () => {
     logOut();
+  };
+
+  // Handle Search Function
+  const handleSearch = () => {
+    // const text = searchTerm.toUpperCase();
+    navigate(`/product/${searchTerm}`);
+  };
+
+  // Handle Enter Key Press
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
   const navMenu = (
     <ul className="flex justify-center items-center md:flex-row flex-col  uppercase text-black md:text-white gap-5">
       <li>
         <CustomLink to="/">Home</CustomLink>
       </li>
-      <li>
-        <CustomLink to="/ourShop">Our Shop</CustomLink>
-      </li>
+      {user ? (
+        <p>
+          {user?.displayName == null ? (
+            <h1 className="text-yellow-400">@userName</h1>
+          ) : (
+            <h1>{user?.displayName}</h1>
+          )}{" "}
+        </p>
+      ) : (
+        <li>
+          <CustomLink to="/ourShop">Our Shop</CustomLink>
+        </li>
+      )}
       <li>
         <CustomLink to="/dashboard">Dashboard</CustomLink>
       </li>
@@ -35,7 +62,7 @@ const Navbar = () => {
         <button
           onClick={handleLogOut}
           style={{ color: "black" }}
-          className="text-base uppercase"
+          className="text-base uppercase cursor-pointer"
         >
           LogOut
         </button>
@@ -54,7 +81,22 @@ const Navbar = () => {
           <Link to="/">
             <img className="h-14" src={logo} alt="" />
           </Link>
-
+          <div className="flex items-center w-full max-w-md border border-gray-300 rounded-md overflow-hidden">
+            <input
+              type="text"
+              placeholder="Search in Sellora"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="flex-1 p-2 outline-none"
+            />
+            <button
+              onClick={handleSearch}
+              className="p-3 bg-orange-500 text-white hover:bg-orange-600 transition cursor-pointer"
+            >
+              <AiOutlineSearch className="w-5 h-5" />
+            </button>
+          </div>
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6">{navMenu}</div>
 

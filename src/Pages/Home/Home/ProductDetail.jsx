@@ -6,6 +6,7 @@ import usePublic from "../../../hooks/usePublic";
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import Rating from "../../../Components/Rating";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -14,7 +15,7 @@ const ProductDetail = () => {
   const [, refetch] = useCart();
   const axiosPublic = usePublic();
   const { user } = useContext(AuthContext);
-  const { name, img, price, _id } = product;
+  const { name, img, price, ratings, ratingsCount, _id } = product;
   const total = product.price + 300;
   const part = 300;
   const percentage = (part / total) * 100;
@@ -58,14 +59,16 @@ const ProductDetail = () => {
   };
   return (
     <div className="container mx-auto">
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-24 px-10 md:px-0">
-        <div>
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-24 px-10 md:px-0 bg-white px-2 py-2">
+        <div className="mt-24">
           <img className="h-96" src={img} alt="" />
         </div>
         <div className="mt-32">
           <h1>{name}</h1>
-          <p>{product.ratings}</p>
-
+          <div className="flex justify-start text-gray-400 items-center gap-3">
+            <Rating totalStars={ratings}></Rating>
+            <h3>({ratingsCount})</h3>
+          </div>
           <p className="text-orange-400">${price}</p>
           <div className="flex gap-5">
             <p className="line-through">${product.price + 300}</p>
@@ -88,7 +91,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </section>
-      <section className="my-5 pb-5 px-10 md:px-0">
+      <section className=" pb-5 px-10 md:px-2 bg-white py-5">
         <p>Category: {product.category}</p>
         <p>Stock: {product.stock}</p>
       </section>
