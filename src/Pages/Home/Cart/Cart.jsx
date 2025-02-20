@@ -57,7 +57,7 @@ const Cart = () => {
                       onClick={() => handleRemoveItem(item._id)}
                       className="cursor-pointer "
                     >
-                      <FaTrashAlt className="text-orange-400"></FaTrashAlt>
+                      <FaTrashAlt className="text-gray-600 text-xl"></FaTrashAlt>
                     </button>
                   </p>
                 </div>
@@ -75,12 +75,12 @@ const Cart = () => {
                 </h3>
                 <h3 className="flex justify-between">
                   <span className="text-gray-600">Shipping Fee </span>
-                  <span>${cart.length * 60}</span>
+                  <span>${cart.length * 2}</span>
                 </h3>
                 <h3 className="flex justify-between">
                   <span className="text-gray-600">Total </span>
                   <span className="text-orange-500">
-                    ${totalPrice + cart.length * 60}
+                    ${totalPrice + cart.length * 2}
                   </span>
                 </h3>
                 <div className="flex justify-center mt-5">

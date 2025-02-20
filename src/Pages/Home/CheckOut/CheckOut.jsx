@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import { FaCircleCheck } from "react-icons/fa6";
 
 const CheckOut = () => {
   const { user } = useContext(AuthContext);
@@ -14,6 +15,14 @@ const CheckOut = () => {
     (total, totalPrice) => total + totalPrice.price,
     0
   );
+  const handleOrder = () => {
+    cart[0].address = "Dhaka";
+    console.log(cart);
+    axiosPublic.post("/order", cart).then((res) => {
+      console.log(res);
+      window.location.replace(res?.data?.url);
+    });
+  };
   const handleRemoveItem = (id) => {
     if (id) {
       Swal.fire({
@@ -65,21 +74,30 @@ const CheckOut = () => {
               </div>
             </div>
             {cart.map((item, index) => (
-              <div
-                className="px-5 py-5 bg-white mb-5 flex justify-between items-center rounded"
-                key={index}
-              >
-                <img className="h-28" src={item.img} alt="" />
-                <h1>{item.name}</h1>
-                <p className="text-orange-400">${item.price}</p>
-                <p>
-                  <button
-                    onClick={() => handleRemoveItem(item._id)}
-                    className="cursor-pointer "
-                  >
-                    <FaTrashAlt className="text-orange-400"></FaTrashAlt>
-                  </button>
-                </p>
+              <div className="px-5 py-5 bg-white mb-5  rounded" key={index}>
+                <div className="">
+                  <h1>Delivery Option</h1>
+                  <div className="border-1 rounded border-green-400 w-46 px-2 py-2 my-2">
+                    <div className="flex gap-2 items-center">
+                      <FaCircleCheck className="text-green-500" />
+                      <h1>$2</h1>
+                    </div>
+                    <h1 className="ml-5 text-gray-600">Standard Delivery</h1>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <img className="h-28" src={item.img} alt="" />
+                  <h1>{item.name}</h1>
+                  <p className="text-orange-400">${item.price}</p>
+                  <p>
+                    <button
+                      onClick={() => handleRemoveItem(item._id)}
+                      className="cursor-pointer "
+                    >
+                      <FaTrashAlt className="text-gray-600 text-xl"></FaTrashAlt>
+                    </button>
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -99,19 +117,22 @@ const CheckOut = () => {
             </h3>
             <h3 className="flex justify-between">
               <span className="text-gray-600">Delivery Fee </span>
-              <span>${cart.length * 60}</span>
+              <span>${cart.length * 2}</span>
             </h3>
             <hr className="text-gray-200 my-2" />
             <h3 className="flex justify-between">
               <span className="text-gray-600">Total </span>
               <span className="text-orange-500">
-                ${totalPrice + cart.length * 60}
+                ${totalPrice + cart.length * 2}
               </span>
             </h3>
 
             <p className="text-end text-sm">VAT included, where applicable</p>
             <div className="flex justify-center mt-5">
-              <button className="uppercase bg-orange-500 text-white py-2 px-2 rounded cursor-pointer">
+              <button
+                onClick={handleOrder}
+                className="uppercase bg-orange-500 text-white py-2 px-2 rounded cursor-pointer"
+              >
                 Procheed To Pay ({cart.length})
               </button>
             </div>
