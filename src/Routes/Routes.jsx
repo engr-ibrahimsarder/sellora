@@ -11,6 +11,10 @@ import PrivateRoute from "./PrivateRoute";
 import CheckOut from "../Pages/Home/CheckOut/CheckOut";
 import PaymentSuccess from "../Pages/Home/PaymentSuccess/PaymentSuccess";
 import PaymentFail from "../Pages/Home/PaymentFail/PaymentFail";
+import Dashboard from "../Layout/Dashboard";
+import ManageAccount from "../Pages/Dashboard/MyAccount/ManageAccount";
+import Profile from "../Pages/Dashboard/Profile/Profile";
+import Orders from "../Pages/Dashboard/Order/Orders";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +76,24 @@ const router = createBrowserRouter([
             <PaymentFail></PaymentFail>
           </PrivateRoute>
         ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "manageaccount",
+        element: <ManageAccount></ManageAccount>,
+      },
+      {
+        path: "/dashboard/profile",
+        element: <Profile></Profile>,
+      },
+      {
+        path: "/dashboard/orders",
+        element: <Orders></Orders>,
       },
     ],
   },

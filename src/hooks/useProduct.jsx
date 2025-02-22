@@ -5,7 +5,7 @@ const useProduct = (productId) => {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    const url = `http://localhost:5000/products/${productId}`;
+    const url = `https://sellora-server.vercel.app/products/${productId}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setProduct(data));

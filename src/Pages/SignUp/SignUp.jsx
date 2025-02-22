@@ -23,6 +23,7 @@ const SignUp = () => {
         email: data.email,
       };
       axiosPublic.post("/users", userInfo).then((res) => {
+        console.log(res);
         if (res.data.insertedId) {
           reset();
           Swal.fire({

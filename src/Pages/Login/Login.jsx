@@ -24,6 +24,7 @@ const Login = () => {
     };
     console.log(userInfo);
     signIn(data.email, data.password).then((res) => {
+      console.log(res);
       const user = res.user;
       if (user) {
         reset();

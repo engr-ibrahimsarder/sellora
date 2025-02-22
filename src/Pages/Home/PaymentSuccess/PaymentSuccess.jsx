@@ -14,7 +14,7 @@ const PaymentSuccess = () => {
   }
   return (
     <div>
-      <h1 className="pt-36">Payment Success: </h1>
+      <h1 className="pt-36">Payment Success: {tranId}</h1>
     </div>
   );
 };

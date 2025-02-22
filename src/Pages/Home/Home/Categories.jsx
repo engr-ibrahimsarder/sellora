@@ -16,7 +16,7 @@ const Categories = () => {
   return (
     <div className="container mx-auto">
       <h1 className="mt-6 text-xl my-2">Categories</h1>
-      <section className="grid  lg:grid-cols-8 px-10 md:px-0 gap-1">
+      <section className="grid grid-cols-4 lg:grid-cols-8 px-10 md:px-0 gap-1">
         <button
           onClick={() => handleCategory("Men's Sneaker")}
           className="cursor-pointer"
